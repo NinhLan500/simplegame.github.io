@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Jigsaw Puzzle</title>
+  <style>
+    :root{--accent:#6b46c1;--bg:#f6f7fb;--card:#ffffff}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
+    body{background:linear-gradient(180deg,var(--bg),#eef2ff);display:flex;align-items:center;justify-content:center;padding:28px}
+    .app{width:100%;max-width:1100px;background:var(--card);box-shadow:0 10px 30px rgba(50,50,93,0.08);border-radius:12px;padding:18px;}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    h1{font-size:18px;margin:0;color:#111827}
+    .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    label{font-size:13px;color:#374151}
+    select,input[type=number]{padding:6px 8px;border-radius:6px;border:1px solid #e6e9ef;background:white}
+    button{background:var(--accent);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+    button.ghost{background:transparent;border:1px solid #ddd;color:#374151}
+    main{display:flex;gap:18px;margin-top:18px}
+    .left{flex:1;display:flex;flex-direction:column;gap:12px;align-items:center}
+    .board-wrap{background:#f8fafc;padding:12px;border-radius:10px}
+    .board{display:grid;touch-action:none}
+    .tile{width:100%;height:100%;background-size:cover;background-position:center;border-radius:6px;box-shadow:0 3px 8px rgba(15,23,42,0.08);cursor:pointer;user-select:none}
+    .tile.empty{background:none;box-shadow:none;cursor:default}
+    .info{min-width:220px}
+    .stats{background:linear-gradient(180deg,#fff,#fbfbff);padding:12px;border-radius:8px;border:1px solid #eef2ff}
+    .stat{font-size:14px;margin-bottom:8px;color:#374151}
+    .small{font-size:12px;color:#6b7280}
+    .uploader{display:flex;gap:8px;align-items:center}
+    input[type=file]{display:none}
+    .file-label{padding:8px 10px;border-radius:8px;border:1px dashed #dbeafe;background:#fff;cursor:pointer}
+    footer{margin-top:12px;font-size:12px;color:#6b7280}
+    @media (max-width:800px){main{flex-direction:column}.info{width:100%}}
+  </style>
+</head>
+<body>
+  <div class="app" role="application" aria-label="Jigsaw puzzle app">
+    <header>
+      <h1>Simple Jigsaw Puzzle 🧩</h1>
+      <div class="controls" aria-hidden="false">
+        <label>Grid
+          <select id="sizeSelect" aria-label="Puzzle size">
+            <option value="3">3 x 3</option>
+            <option value="4" selected>4 x 4</option>
+            <option value="5">5 x 5</option>
+          </select>
+        </label>
+        <label>Image
+          <div class="uploader">
+            <label class="file-label" for="imgFile">Upload</label>
+            <input id="imgFile" type="file" accept="image/*">
+            <button id="useSample" class="ghost">Use sample</button>
+          </div>
+        </label>
+        <button id="shuffleBtn">Shuffle</button>
+        <button id="solveBtn" class="ghost">Solve</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="left">
+        <div class="board-wrap" id="boardWrap">
+          <div id="board" class="board" role="grid" aria-label="Puzzle board"></div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button id="swapMode">Swap: Click tiles</button>
+          <button id="dragMode" class="ghost">Dr
